@@ -8,16 +8,14 @@ ENV UID 1000
 ENV GID 1000
 
 RUN apt-get update -q && \
-    apt-get install -qy
-
-RUN apt-get install -qy mpd
+       apt-get install -qy mpd
 RUN rm /etc/mpd.conf
 
-RUN groupadd -g $GID mpd_user
-RUN useradd --no-create-home -g mpd_user --uid $UID -G audio mpd_user
+RUN groupadd -g $GID mpd_user && \
+       useradd --no-create-home -g mpd_user --uid $UID -G audio mpd_user
 
-RUN mkdir -p /run/mpd/
-RUN chown mpd_user /run/mpd
+RUN mkdir -p /run/mpd/ && \
+       chown mpd_user /run/mpd
 
 USER mpd_user
 
